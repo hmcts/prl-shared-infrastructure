@@ -1,0 +1,11 @@
+#!groovy
+//noinspection GroovyUnusedAssignment
+@Library("Infrastructure") _
+
+def product = 'prl'
+def branchesToSync = ['demo', 'perftest', 'ithc']
+
+withInfraPipeline(product) {
+  syncBranchesWithMaster(branchesToSync)
+  enableSlackNotifications("#prl-tech-notifications")
+}

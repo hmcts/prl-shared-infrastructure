@@ -1,2 +1,7 @@
-# prl-shared-infrastructure
-shared-infrastructure for private law
+# PRL-SHARED-INFRASTRUCTURE
+
+Shared infrastructure for Private Law. 
+
+- appinsights
+- vault
+- azure monitoring
