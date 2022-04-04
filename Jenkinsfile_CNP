@@ -7,5 +7,5 @@ def branchesToSync = ['demo', 'perftest', 'ithc']
 
 withInfraPipeline(product) {
   syncBranchesWithMaster(branchesToSync)
-  enableSlackNotifications("#prl-tech-notifications")
+  enableSlackNotifications("prl-tech-notifications")
 }
