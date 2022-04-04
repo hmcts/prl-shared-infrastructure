@@ -1,4 +1,4 @@
-# PRL-SHARED-INFRASTRUCTURE
+# prl-shared-infrastructure
 
 Shared infrastructure for Private Law. 
 
