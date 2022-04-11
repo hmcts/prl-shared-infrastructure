@@ -86,13 +86,13 @@ data "azurerm_key_vault_secret" "cos_key_from_vault" {
   key_vault_id = data.azurerm_key_vault.s2s_vault.id
 }
 
-resource "azurerm_key_vault_secret" "s2s" {
+resource "azurerm_key_vault_secret" "cos_api_s2s_secret" {
   name         = "microservicekey-prl-cos-api"
   value        = data.azurerm_key_vault_secret.cos_key_from_vault.value
   key_vault_id = data.azurerm_key_vault.key_vault.id
 }
 
-resource "azurerm_key_vault_secret" "s2s" {
+resource "azurerm_key_vault_secret" "dgs_api_s2s_secret" {
   name         = "microservicekey-prl-dgs-api"
   value        = data.azurerm_key_vault_secret.cos_key_from_vault.value
   key_vault_id = data.azurerm_key_vault.key_vault.id
