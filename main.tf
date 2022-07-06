@@ -1,7 +1,3 @@
-provider "azurerm" {
-  features {}
-}
-
 resource "azurerm_resource_group" "rg" {
   name     = "${var.product}-${var.env}"
   location = var.location
@@ -95,32 +91,5 @@ resource "azurerm_key_vault_secret" "cos_api_s2s_secret" {
 resource "azurerm_key_vault_secret" "dgs_api_s2s_secret" {
   name         = "microservicekey-prl-dgs-api"
   value        = data.azurerm_key_vault_secret.cos_key_from_vault.value
-  key_vault_id = data.azurerm_key_vault.key_vault.id
-}
-
-data "azurerm_key_vault" "send_grid" {
-  name                = var.env != "prod" ? "sendgridnonprod" : "sendgridprod"
-  resource_group_name = var.env != "prod" ? "SendGrid-nonprod" : "SendGrid-prod"
-}
-
-data "azurerm_key_vault_secret" "send_grid_api_key" {
-  name         = "hmcts-private-law-api-key"
-  key_vault_id = data.azurerm_key_vault.send_grid.id
-}
-
-data "azurerm_key_vault_secret" "send_grid_password_key" {
-  name         = "hmcts-private-law-password"
-  key_vault_id = data.azurerm_key_vault.send_grid.id
-}
-
-resource "azurerm_key_vault_secret" "sendgrid_api_key" {
-  name         = "send-grid-api-key"
-  value        = data.azurerm_key_vault_secret.send_grid_api_key.value
-  key_vault_id = data.azurerm_key_vault.key_vault.id
-}
-
-resource "azurerm_key_vault_secret" "sendgrid_password_key" {
-  name         = "send-grid-password"
-  value        = data.azurerm_key_vault_secret.send_grid_password_key.value
   key_vault_id = data.azurerm_key_vault.key_vault.id
 }
