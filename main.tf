@@ -81,6 +81,11 @@ data "azurerm_key_vault_secret" "cos_key_from_vault" {
   name         = "microservicekey-prl-cos-api" # update key name e.g. microservicekey-your-name
   key_vault_id = data.azurerm_key_vault.s2s_vault.id
 }
+  
+data "azurerm_key_vault_secret" "citizen_key_from_vault" {
+  name         = "microservicekey-prl-citizen-frontend" # update key name e.g. microservicekey-your-name
+  key_vault_id = data.azurerm_key_vault.s2s_vault.id
+}
 
 resource "azurerm_key_vault_secret" "cos_api_s2s_secret" {
   name         = "microservicekey-prl-cos-api"
@@ -91,5 +96,11 @@ resource "azurerm_key_vault_secret" "cos_api_s2s_secret" {
 resource "azurerm_key_vault_secret" "dgs_api_s2s_secret" {
   name         = "microservicekey-prl-dgs-api"
   value        = data.azurerm_key_vault_secret.cos_key_from_vault.value
+  key_vault_id = data.azurerm_key_vault.key_vault.id
+}
+
+resource "azurerm_key_vault_secret" "citizen_api_s2s_secret" {
+  name         = "microservicekey-prl-citizen-frontend"
+  value        = data.azurerm_key_vault_secret.citizen_key_from_vault.value
   key_vault_id = data.azurerm_key_vault.key_vault.id
 }
