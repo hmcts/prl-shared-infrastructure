@@ -1,7 +1,7 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: "-shared-infrastructure"
+  name: "prl-shared-infrastructure"
   annotations:
     # This must match folder-name/job-name in Jenkins.
     jenkins.io/job-full-name: cft:HMCTS_j_to_z/prl-shared-infrastructure
@@ -9,10 +9,10 @@ metadata:
   tags:
     - terraform
   links:
-    - url: https://hmcts-reform.slack.com/app_redirect?channel=
-      title: " on Slack"
+    - url: https://hmcts-reform.slack.com/app_redirect?channel=prl-tech-notifications
+      title: "#prl-tech-notifications on Slack"
       icon: chat
 spec:
   type: service
   lifecycle: production
-  owner: 
+  owner: dts_family_private_law
