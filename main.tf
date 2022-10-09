@@ -113,7 +113,7 @@ data "azurerm_subnet" "core_infra_redis_subnet" {
 
 module "prl-citizen-frontend-session-storage" {
   source   = "git@github.com:hmcts/cnp-module-redis?ref=master"
-  product  = "${var.product}-${var.component}-redis"
+  product  = "${var.product}-${var.citizen_component}-redis"
   location = var.location
   env      = var.env
   subnetid = data.azurerm_subnet.core_infra_redis_subnet.id
