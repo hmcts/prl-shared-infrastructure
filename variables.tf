@@ -6,6 +6,11 @@ variable "common_tags" {
 variable "product" {
   default = "prl"
 }
+
+variable "citizen_component" {
+  default = "citizen-frontend"
+}
+
 variable "env" {}
 variable "tenant_id" {}
 
