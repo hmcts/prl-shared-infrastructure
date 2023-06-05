@@ -27,7 +27,7 @@ resource "azurerm_key_vault_secret" "AZURE_APPINSIGHTS_KEY" {
 
 resource "azurerm_application_insights" "appinsights" {
   name                = "${var.product}-appinsights-${var.env}"
-  location            = var.appinsights_location
+  location            = "UK South"
   resource_group_name = azurerm_resource_group.rg.name
   application_type    = "web"
 
@@ -123,5 +123,11 @@ module "prl-citizen-frontend-session-storage" {
 resource "azurerm_key_vault_secret" "redis_access_key" {
   name         = "redis-access-key"
   value        = module.prl-citizen-frontend-session-storage.access_key
+  key_vault_id = data.azurerm_key_vault.key_vault.id
+}
+
+resource "azurerm_key_vault_secret" "app_insights_connection_string" {
+  name         = "app-insights-connection-string"
+  value        = azurerm_application_insights.appinsights.connection_string
   key_vault_id = data.azurerm_key_vault.key_vault.id
 }
