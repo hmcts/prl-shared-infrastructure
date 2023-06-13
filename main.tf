@@ -106,7 +106,7 @@ resource "azurerm_key_vault_secret" "citizen_api_s2s_secret" {
 }
 
 module "prl-citizen-frontend-session-storage" {
-  source   = "git@github.com:hmcts/cnp-module-redis?ref=add-redis-version-flag"
+  source   = "git@github.com:hmcts/cnp-module-redis?ref=master"
   product  = "${var.product}-${var.citizen_component}-redis"
   location = var.location
   env      = var.env
