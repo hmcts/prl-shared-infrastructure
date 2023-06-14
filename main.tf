@@ -105,19 +105,16 @@ resource "azurerm_key_vault_secret" "citizen_api_s2s_secret" {
   key_vault_id = data.azurerm_key_vault.key_vault.id
 }
 
-data "azurerm_subnet" "core_infra_redis_subnet" {
-  name                 = "core-infra-subnet-1-${var.env}"
-  virtual_network_name = "core-infra-vnet-${var.env}"
-  resource_group_name = "core-infra-${var.env}"
-}
-
 module "prl-citizen-frontend-session-storage" {
   source   = "git@github.com:hmcts/cnp-module-redis?ref=master"
   product  = "${var.product}-${var.citizen_component}-redis"
   location = var.location
   env      = var.env
-  subnetid = data.azurerm_subnet.core_infra_redis_subnet.id
   common_tags  = var.common_tags
+  private_endpoint_enabled = true
+  redis_version = "6"
+  business_area = "cft"
+  public_network_access_enabled = false
 }
 
 resource "azurerm_key_vault_secret" "redis_access_key" {
