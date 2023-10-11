@@ -14,9 +14,9 @@ module "key-vault" {
   resource_group_name = azurerm_resource_group.rg.name
 
   # dcd_platformengineering group object ID
-  product_group_name = "DTS Family Private Law"
-  common_tags                = var.common_tags
-  create_managed_identity    = true
+  product_group_name      = "DTS Family Private Law"
+  common_tags             = var.common_tags
+  create_managed_identity = true
 }
 
 resource "azurerm_key_vault_secret" "AZURE_APPINSIGHTS_KEY" {
@@ -46,7 +46,7 @@ resource "azurerm_key_vault_secret" "AZURE_APPINSIGHTS_KEY_PREVIEW" {
   name         = "AppInsightsInstrumentationKey-Preview"
   value        = azurerm_application_insights.appinsights_preview[0].instrumentation_key
   key_vault_id = module.key-vault.key_vault_id
-  count = var.env == "aat" ? 1 : 0
+  count        = var.env == "aat" ? 1 : 0
 }
 
 resource "azurerm_application_insights" "appinsights_preview" {
@@ -54,7 +54,7 @@ resource "azurerm_application_insights" "appinsights_preview" {
   location            = var.appinsights_location
   resource_group_name = azurerm_resource_group.rg.name
   application_type    = "web"
-  count = var.env == "aat" ? 1 : 0
+  count               = var.env == "aat" ? 1 : 0
 
   tags = var.common_tags
 
@@ -81,7 +81,7 @@ data "azurerm_key_vault_secret" "cos_key_from_vault" {
   name         = "microservicekey-prl-cos-api" # update key name e.g. microservicekey-your-name
   key_vault_id = data.azurerm_key_vault.s2s_vault.id
 }
-  
+
 data "azurerm_key_vault_secret" "citizen_key_from_vault" {
   name         = "microservicekey-prl-citizen-frontend" # update key name e.g. microservicekey-your-name
   key_vault_id = data.azurerm_key_vault.s2s_vault.id
@@ -106,15 +106,19 @@ resource "azurerm_key_vault_secret" "citizen_api_s2s_secret" {
 }
 
 module "prl-citizen-frontend-session-storage" {
-  source   = "git@github.com:hmcts/cnp-module-redis?ref=master"
-  product  = "${var.product}-${var.citizen_component}-redis"
-  location = var.location
-  env      = var.env
-  common_tags  = var.common_tags
-  private_endpoint_enabled = true
-  redis_version = "6"
-  business_area = "cft"
+  source                        = "git@github.com:hmcts/cnp-module-redis?ref=master"
+  product                       = "${var.product}-${var.citizen_component}-redis"
+  location                      = var.location
+  env                           = var.env
+  common_tags                   = var.common_tags
+  private_endpoint_enabled      = true
+  redis_version                 = "6"
+  business_area                 = "cft"
   public_network_access_enabled = false
+  sku_name                      = var.sku_name
+  family                        = var.family
+  capacity                      = var.capacity
+
 }
 
 resource "azurerm_key_vault_secret" "redis_access_key" {
