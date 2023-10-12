@@ -51,7 +51,7 @@ resource "azurerm_key_vault_secret" "AZURE_APPINSIGHTS_KEY_PREVIEW" {
 
 resource "azurerm_application_insights" "appinsights_preview" {
   name                = "${var.product}-appinsights-preview"
-  location            = var.appinsights_location
+  location            = var.location
   resource_group_name = azurerm_resource_group.rg.name
   application_type    = "web"
   count               = var.env == "aat" ? 1 : 0
