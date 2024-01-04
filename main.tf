@@ -21,50 +21,50 @@ module "key-vault" {
 
 resource "azurerm_key_vault_secret" "AZURE_APPINSIGHTS_KEY" {
   name         = "AppInsightsInstrumentationKey"
-  value        = azurerm_application_insights.appinsights.instrumentation_key
+  value        = module.application_insights.instrumentation_key
   key_vault_id = module.key-vault.key_vault_id
 }
 
-resource "azurerm_application_insights" "appinsights" {
-  name                = "${var.product}-appinsights-${var.env}"
-  location            = var.location
+module "application_insights" {
+  source = "git@github.com:hmcts/terraform-module-application-insights?ref=main"
+
+  env     = var.env
+  product = var.product
+  name    = "${var.product}-appinsights"
+
   resource_group_name = azurerm_resource_group.rg.name
-  application_type    = "web"
+  location            = var.location
+  common_tags         = var.common_tags
+}
 
-  tags = var.common_tags
-
-  lifecycle {
-    ignore_changes = [
-      # Ignore changes to appinsights as otherwise upgrading to the Azure provider 2.x
-      # destroys and re-creates this appinsights instance..
-      application_type,
-    ]
-  }
+moved {
+  from = azurerm_application_insights.appinsights
+  to   = module.application_insights.azurerm_application_insights.this
 }
 
 resource "azurerm_key_vault_secret" "AZURE_APPINSIGHTS_KEY_PREVIEW" {
   name         = "AppInsightsInstrumentationKey-Preview"
-  value        = azurerm_application_insights.appinsights_preview[0].instrumentation_key
+  value        = module.application_insights_preview[0].instrumentation_key
   key_vault_id = module.key-vault.key_vault_id
   count        = var.env == "aat" ? 1 : 0
 }
 
-resource "azurerm_application_insights" "appinsights_preview" {
-  name                = "${var.product}-appinsights-preview"
-  location            = var.location
+module "application_insights_preview" {
+  count    = var.env == "aat" ? 1 : 0
+  source   = "git@github.com:hmcts/terraform-module-application-insights?ref=main"
+  location = var.location
+  env      = "preview"
+  product  = var.product
+  name     = "${var.product}-appinsights"
+
   resource_group_name = azurerm_resource_group.rg.name
-  application_type    = "web"
-  count               = var.env == "aat" ? 1 : 0
 
-  tags = var.common_tags
+  common_tags = var.common_tags
+}
 
-  lifecycle {
-    ignore_changes = [
-      # Ignore changes to appinsights as otherwise upgrading to the Azure provider 2.x
-      # destroys and re-creates this appinsights instance..
-      application_type,
-    ]
-  }
+moved {
+  from = azurerm_application_insights.appinsights_preview[0]
+  to   = module.application_insights_preview[0].azurerm_application_insights.this
 }
 
 data "azurerm_key_vault" "key_vault" {
@@ -129,6 +129,6 @@ resource "azurerm_key_vault_secret" "redis_access_key" {
 
 resource "azurerm_key_vault_secret" "app_insights_connection_string" {
   name         = "app-insights-connection-string"
-  value        = azurerm_application_insights.appinsights.connection_string
+  value        = module.application_insights.connection_string
   key_vault_id = data.azurerm_key_vault.key_vault.id
 }
