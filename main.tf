@@ -94,7 +94,7 @@ data "azurerm_key_vault_secret" "citizen_key_from_vault" {
 
 data "azurerm_key_vault_secret" "prl_pcq_key_from_vault" {
   name         = "prl-token-key"
-  key_vault_id = data.azurerm_key_vault.pcq_vault
+  key_vault_id = data.azurerm_key_vault.pcq_vault.id
 }
 
 resource "azurerm_key_vault_secret" "cos_api_s2s_secret" {
