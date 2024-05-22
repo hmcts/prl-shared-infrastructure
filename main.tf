@@ -1,8 +1,3 @@
-provider "azurerm" {
-  subscription_id = var.aks_subscription_id
-  features {}
-}
-
 resource "azurerm_resource_group" "rg" {
   name     = "${var.product}-${var.env}"
   location = var.location
