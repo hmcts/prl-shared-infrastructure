@@ -92,11 +92,6 @@ data "azurerm_key_vault_secret" "citizen_key_from_vault" {
   key_vault_id = data.azurerm_key_vault.s2s_vault.id
 }
 
-#data "azurerm_key_vault_secret" "prl_pcq_key_from_vault" {
-  #name         = "prl-token-key"
-  #key_vault_id = data.azurerm_key_vault.pcq_vault.id
-#}
-
 data "azurerm_key_vault_secret" "prl_pcq_key_from_vault" {
   name         = "prl-pcq-token-key"
   key_vault_id = data.azurerm_key_vault.pcq_vault.id
@@ -120,11 +115,11 @@ resource "azurerm_key_vault_secret" "citizen_api_s2s_secret" {
   key_vault_id = data.azurerm_key_vault.key_vault.id
 }
 
-resource "azurerm_key_vault_secret" "prl_pcq_token_key" {
-  name         = "prl-pcq-token-key"
-  value        = data.azurerm_key_vault_secret.prl_pcq_key_from_vault.value
-  key_vault_id = data.azurerm_key_vault.key_vault.id
-}
+#resource "azurerm_key_vault_secret" "prl_pcq_token_key" {
+  #name         = "prl-pcq-token-key"
+  #value        = data.azurerm_key_vault_secret.prl_pcq_key_from_vault.value
+  #key_vault_id = data.azurerm_key_vault.key_vault.id
+#}
 
 module "prl-citizen-frontend-session-storage" {
   source                        = "git@github.com:hmcts/cnp-module-redis?ref=master"
