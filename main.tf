@@ -92,10 +92,10 @@ data "azurerm_key_vault_secret" "citizen_key_from_vault" {
   key_vault_id = data.azurerm_key_vault.s2s_vault.id
 }
 
-data "azurerm_key_vault_secret" "prl_pcq_key_from_vault" {
-  name         = "prl-token-key"
-  key_vault_id = data.azurerm_key_vault.pcq_vault.id
-}
+#data "azurerm_key_vault_secret" "prl_pcq_key_from_vault" {
+  #name         = "prl-token-key"
+  #key_vault_id = data.azurerm_key_vault.pcq_vault.id
+#}
 
 data "azurerm_key_vault_secret" "prl_pcq_key_from_vault" {
   name         = "prl-pcq-token-key"
