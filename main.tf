@@ -97,6 +97,11 @@ data "azurerm_key_vault_secret" "prl_pcq_key_from_vault" {
   key_vault_id = data.azurerm_key_vault.pcq_vault.id
 }
 
+data "azurerm_key_vault_secret" "prl_pcq_key_from_vault" {
+  name         = "prl-pcq-token-key"
+  key_vault_id = data.azurerm_key_vault.pcq_vault.id
+}
+
 resource "azurerm_key_vault_secret" "cos_api_s2s_secret" {
   name         = "microservicekey-prl-cos-api"
   value        = data.azurerm_key_vault_secret.cos_key_from_vault.value
