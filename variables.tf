@@ -13,6 +13,7 @@ variable "citizen_component" {
 
 variable "env" {}
 variable "tenant_id" {}
+variable "aks_subscription_id" {}
 
 variable "location" {
   default = "UK South"

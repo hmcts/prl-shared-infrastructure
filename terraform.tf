@@ -1,5 +1,6 @@
 provider "azurerm" {
   features {}
+  subscription_id = var.aks_subscription_id
 }
 
 provider "azurerm" {
@@ -18,7 +19,7 @@ terraform {
     }
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "3.75.0"
+      version = "3.78.0"
     }
   }
 }
