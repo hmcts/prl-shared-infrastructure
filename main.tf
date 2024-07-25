@@ -121,9 +121,9 @@ resource "azurerm_key_vault_secret" "prl_pcq_token_key" {
   key_vault_id = data.azurerm_key_vault.key_vault.id
 }
 
-module "prl-citizen-frontend-session-storage" {
+module "prl-citizen-frontend-secondary-session-storage" {
   source                        = "git@github.com:hmcts/cnp-module-redis?ref=master"
-  product                       = "${var.product}-${var.citizen_component}-redis"
+  product                       = "${var.product}-${var.citizen_component}-secondary-redis"
   location                      = var.location
   env                           = var.env
   common_tags                   = var.common_tags
@@ -139,7 +139,7 @@ module "prl-citizen-frontend-session-storage" {
 
 resource "azurerm_key_vault_secret" "redis_access_key" {
   name         = "redis-access-key"
-  value        = module.prl-citizen-frontend-session-storage.access_key
+  value        = module.prl-citizen-frontend-secondary-session-storage.access_key
   key_vault_id = data.azurerm_key_vault.key_vault.id
 }
 
