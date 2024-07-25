@@ -121,6 +121,21 @@ resource "azurerm_key_vault_secret" "prl_pcq_token_key" {
   key_vault_id = data.azurerm_key_vault.key_vault.id
 }
 
+module "prl-citizen-frontend-session-storage" {
+  source                        = "git@github.com:hmcts/cnp-module-redis?ref=master"
+  product                       = "${var.product}-${var.citizen_component}-redis"
+  location                      = var.location
+  env                           = var.env
+  common_tags                   = var.common_tags
+  private_endpoint_enabled      = true
+  redis_version                 = "6"
+  business_area                 = "cft"
+  public_network_access_enabled = false
+  sku_name                      = var.sku_name
+  family                        = var.family
+  capacity                      = var.capacity
+}
+
 module "prl-citizen-frontend-secondary-session-storage" {
   source                        = "git@github.com:hmcts/cnp-module-redis?ref=master"
   product                       = "${var.product}-${var.citizen_component}-secondary-redis"
@@ -134,8 +149,13 @@ module "prl-citizen-frontend-secondary-session-storage" {
   sku_name                      = var.sku_name
   family                        = var.family
   capacity                      = var.capacity
-
 }
+
+#resource "azurerm_key_vault_secret" "redis_access_key" {
+#  name         = "redis-access-key"
+#  value        = module.prl-citizen-frontend-session-storage.access_key
+#  key_vault_id = data.azurerm_key_vault.key_vault.id
+#}
 
 resource "azurerm_key_vault_secret" "redis_access_key" {
   name         = "redis-access-key"
