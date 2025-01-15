@@ -151,17 +151,17 @@ module "prl-citizen-frontend-secondary-session-storage" {
   capacity                      = var.capacity
 }
 
-#resource "azurerm_key_vault_secret" "redis_access_key" {
-#  name         = "redis-access-key"
-#  value        = module.prl-citizen-frontend-session-storage.access_key
-#  key_vault_id = data.azurerm_key_vault.key_vault.id
-#}
-
 resource "azurerm_key_vault_secret" "redis_access_key" {
   name         = "redis-access-key"
-  value        = module.prl-citizen-frontend-secondary-session-storage.access_key
+  value        = module.prl-citizen-frontend-session-storage.access_key
   key_vault_id = data.azurerm_key_vault.key_vault.id
 }
+
+#resource "azurerm_key_vault_secret" "redis_access_key" {
+#  name         = "redis-access-key"
+#  value        = module.prl-citizen-frontend-secondary-session-storage.access_key
+#  key_vault_id = data.azurerm_key_vault.key_vault.id
+#}
 
 resource "azurerm_key_vault_secret" "app_insights_connection_string" {
   name         = "app-insights-connection-string"
