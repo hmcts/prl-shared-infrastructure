@@ -122,7 +122,7 @@ resource "azurerm_key_vault_secret" "prl_pcq_token_key" {
 }
 
 module "prl-citizen-frontend-session-storage" {
-  source                        = "git@github.com:hmcts/cnp-module-redis?ref=master"
+  source                        = "git@github.com:hmcts/cnp-module-redis?ref=4.x"
   product                       = "${var.product}-${var.citizen_component}-redis"
   location                      = var.location
   env                           = var.env
@@ -137,7 +137,7 @@ module "prl-citizen-frontend-session-storage" {
 }
 
 module "prl-citizen-frontend-secondary-session-storage" {
-  source                        = "git@github.com:hmcts/cnp-module-redis?ref=master"
+  source                        = "git@github.com:hmcts/cnp-module-redis?ref=4.x"
   product                       = "${var.product}-${var.citizen_component}-secondary-redis"
   location                      = var.location
   env                           = var.env
