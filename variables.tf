@@ -44,3 +44,9 @@ variable "capacity" {
   default     = "1"
   description = "The size of the Redis cache to deploy. Valid values are 1, 2, 3, 4, 5"
 }
+
+variable "slack_alerts_principal_id" {
+  description = "Managed identity principal ID of the slack alerts function app. Only needed in prod."
+  type        = string
+  default     = ""
+}
