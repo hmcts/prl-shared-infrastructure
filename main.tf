@@ -114,3 +114,15 @@ resource "azurerm_key_vault_secret" "redis_access_key" {
 #  value        = module.prl-citizen-frontend-secondary-session-storage.access_key
 #  key_vault_id = data.azurerm_key_vault.key_vault.id
 #}
+
+# Slack alerts function app managed identity principal ID
+# Can be provided via variable or uses hardcoded default for prod
+# Hardcoded because pipeline service principal lacks access to subscription
+# If function app is recreated, update this ID from:
+# az functionapp identity show --name prl-slack-alerts --resource-group prl-slack-alerts --query principalId -o tsv
+locals {
+  # Use variable if provided, otherwise use hardcoded prod value
+  slack_alerts_principal_id = var.slack_alerts_principal_id != "" ? var.slack_alerts_principal_id : (
+    var.env == "prod" ? "98ec027e-40cb-49db-92de-6e7454ac5cc9" : null
+  )
+}
