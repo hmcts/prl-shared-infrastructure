@@ -1,3 +1,3 @@
 #this var for enabling monitoring alerts from main.tp per environment
 custom_alerts_enabled = "false"
-sampling_percentage = 1
+sampling_percentage   = 1
