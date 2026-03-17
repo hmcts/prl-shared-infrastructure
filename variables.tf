@@ -50,3 +50,9 @@ variable "slack_alerts_principal_id" {
   type        = string
   default     = ""
 }
+
+variable "sampling_percentage" {
+  description = "Percentage of telemetry data sampled by Application Insights. Defaults to 100."
+  type        = number
+  default     = 100
+}
